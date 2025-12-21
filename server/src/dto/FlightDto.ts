@@ -1,4 +1,4 @@
-export default interface Flight {
+export interface FlightDto {
   flightNumber: string;
   originAirportCode: string;
   originAirportName: string;
