@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import flightRoutes from "./routes/flightRoutes";
+import pickUpRecommendationRoutes from "./routes/pickUpRecommendationRoutes";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/flights", flightRoutes);
+app.use("/pickUpRecommendation", pickUpRecommendationRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, TypeScript Express!");
