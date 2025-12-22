@@ -1,9 +1,12 @@
 import PickUpRecommendation from "../models/PickUpRecommendation";
+import { getTravelTimeInMinutesFromLocationToAirport } from "./googleMapsService";
 
+const AIRPORT_PARKING_LOCATION = "39.54620114358946, 2.729836835509142";
 const MINUTES_WALKING_FROM_AIRPORT_TO_PARKING = 20;
 
 export const buildPickUpRecommendation = async (
-  arrivalTime: string
+  arrivalTime: string,
+  userLocation: string
 ): Promise<PickUpRecommendation> => {
   const datePassengerIsAtParking = addMinutes(
     MINUTES_WALKING_FROM_AIRPORT_TO_PARKING,
@@ -11,7 +14,11 @@ export const buildPickUpRecommendation = async (
   );
   if (datePassengerIsAtParking <= new Date()) return { leaveAt: "now" };
 
-  const travelTimeFromLocationToAirport = 40; // this will come from the google api
+  const travelTimeFromLocationToAirport =
+    await getTravelTimeInMinutesFromLocationToAirport(
+      userLocation,
+      AIRPORT_PARKING_LOCATION
+    );
   const dateAtTheAirportLeavingNow = addMinutes(
     travelTimeFromLocationToAirport
   );

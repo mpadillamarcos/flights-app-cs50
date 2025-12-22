@@ -14,8 +14,17 @@ export const getPickUpRecommendation = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "The flight arrival time is not ISO" });
     }
-    const recommendation =
-      await buildPickUpRecommendation(flightArrivalTimeStr);
+
+    const location = req.query.location;
+    if (!location) {
+      return res.status(400).json({ error: "No location found" });
+    }
+    const locationStr = String(location);
+
+    const recommendation = await buildPickUpRecommendation(
+      flightArrivalTimeStr,
+      locationStr
+    );
     res.json(recommendation);
   } catch (error) {
     res.status(500).json({ error: "Failed to get pick up recommendation" });

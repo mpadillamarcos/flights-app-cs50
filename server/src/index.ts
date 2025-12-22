@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import flightRoutes from "./routes/flightRoutes";
 import pickUpRecommendationRoutes from "./routes/pickUpRecommendationRoutes";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
