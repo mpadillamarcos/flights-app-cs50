@@ -1,9 +1,10 @@
+import Airport from "./Airport";
+
 export default interface Flight {
   flightNumber: string;
-  originAirportCode: string;
-  originAirportName: string;
-  destinationAirportCode: string;
-  scheduledArrival: string;
-  estimatedArrival: string;
+  origin: Airport;
+  destination: Airport;
+  scheduledArrival: Date;
+  estimatedArrival: Date;
   status: string;
 }

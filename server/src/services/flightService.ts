@@ -16,7 +16,7 @@ export const getNextXHoursFlights = async (
     )
     .map((dto) => mapDtoToFlight(dto))
     .reduce<FlightsByOrigin>((acc, flight) => {
-      const origin = flight.originAirportName ?? "UNKNOWN";
+      const origin = flight.origin.name ?? "UNKNOWN";
       if (!acc[origin]) acc[origin] = [];
       acc[origin].push(flight);
       return acc;
@@ -24,17 +24,21 @@ export const getNextXHoursFlights = async (
 };
 
 function addHoursToNow(hours: number) {
-  var now = new Date();
+  const now = new Date();
   const result = new Date(now.setHours(now.getHours() + hours));
   return result;
 }
 
 const mapDtoToFlight = (dto: FlightDto): Flight => ({
   flightNumber: dto.flightNumber,
-  originAirportCode: dto.originAirportCode,
-  originAirportName: dto.originAirportName,
-  destinationAirportCode: dto.destinationAirportCode,
-  scheduledArrival: dto.scheduledArrival,
-  estimatedArrival: dto.estimatedArrival,
+  origin: {
+    yata: dto.originAirportCode,
+    name: dto.originAirportName,
+  },
+  destination: {
+    yata: dto.destinationAirportCode,
+  },
+  scheduledArrival: new Date(dto.scheduledArrival),
+  estimatedArrival: new Date(dto.estimatedArrival),
   status: dto.status,
 });
