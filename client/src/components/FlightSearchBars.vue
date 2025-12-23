@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue"
+import { ref, watch, onMounted } from "vue"
 import { useRoute, useRouter } from "vue-router";
 import SearchIcon from "../components/icons/SearchIcon.vue"
 
@@ -14,8 +14,8 @@ const route = useRoute();
 const router = useRouter();
 
 const selectedSearchOption = ref("flightNumber");
-const flightNumber = ref(null);
-const flightOrigin = ref(null);
+const flightNumber = ref("");
+const flightOrigin = ref("");
 
 const handleSearchByFlightNumber = () => {
     router.replace({
@@ -36,14 +36,34 @@ const handleSearchByFlightOrigin = () => {
 }
 
 watch(selectedSearchOption, (newSelectedOption) => {
-    router.replace({
-        query: {
-            searchOption: newSelectedOption,
-        },
-    });
-    flightNumber.value = null
-    flightOrigin.value = null
+    const newQuery: Record<string, string> = { searchOption: newSelectedOption };
+
+    if (newSelectedOption === "flightNumber" && flightNumber.value) {
+        newQuery.flightNum = flightNumber.value
+    } else if (newSelectedOption === "flightOrigin" && flightOrigin.value) {
+        newQuery.flightOrigin = flightOrigin.value
+    }
+
+    router.replace({ query: newQuery })
+
+    if (newSelectedOption === "flightNumber") {
+        flightOrigin.value = ""
+    } else {
+        flightNumber.value = ""
+    }
 });
+
+onMounted(() => {
+    if (route.query.searchOption) {
+        selectedSearchOption.value = String(route.query.searchOption)
+    }
+    if (route.query.flightNum) {
+        flightNumber.value = String(route.query.flightNum)
+    }
+    if (route.query.flightOrigin) {
+        flightOrigin.value = String(route.query.flightOrigin)
+    }
+})
 </script>
 
 <template>
