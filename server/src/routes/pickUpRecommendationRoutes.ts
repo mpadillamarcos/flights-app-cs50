@@ -3,6 +3,6 @@ import { getPickUpRecommendation } from "../controllers/pickUpRecommendationCont
 
 const router = express.Router();
 
-router.get("/", getPickUpRecommendation);
+router.get("/pickUpRecommendation", getPickUpRecommendation);
 
 export default router;

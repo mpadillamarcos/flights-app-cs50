@@ -8,11 +8,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use("/flights", flightRoutes);
-app.use("/pickUpRecommendation", pickUpRecommendationRoutes);
+app.use("/api", flightRoutes);
+app.use("/api", pickUpRecommendationRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript Express!");
+  res.send(
+    "Available endpoints: /api/flights and /api/getPickUpRecommendation"
+  );
 });
 
 app.get("/ping", (req: Request, res: Response) => {
