@@ -76,7 +76,7 @@ onMounted(() => {
         </div>
         <div v-if="selectedSearchOption === 'flightNumber'" id="searchBar">
             <div class="row">
-                <input v-model="flightNumber" placeholder="Enter flight number" />
+                <input v-model="flightNumber" placeholder="Enter flight number. Eg: ABC1234" />
                 <button class="search button" @click="handleSearchByFlightNumber">
                     <SearchIcon />
                 </button>
