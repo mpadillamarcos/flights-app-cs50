@@ -29,7 +29,7 @@ const handleSearchByFlightNumber = () => {
 const handleSearchByFlightOrigin = () => {
     router.replace({
         query: {
-            ...route.query,
+            searchOption: selectedSearchOption.value,
             flightOrigin: flightOrigin.value,
         },
     });

@@ -53,7 +53,8 @@ onMounted(async () => {
 <template>
   <main>
     <FlightSearchBars :flight-origins="flightOrigins" />
-    <FlightsTable v-if="selectedFlightOrigin" :flights-by-origin="flightsBySelectedOrigin" />
+    <FlightsTable v-if="selectedFlightOrigin && !flightSelectedByFlightNumber"
+      :flights-by-origin="flightsBySelectedOrigin" />
     <div id="reseponse" v-if="flightSelectedByFlightNumber">
       {{ flightSelectedByFlightNumber }}
     </div>

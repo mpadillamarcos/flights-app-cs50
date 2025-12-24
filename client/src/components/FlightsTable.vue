@@ -1,5 +1,9 @@
 <script setup>
 import enLocale from "../locales/en.json"
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
 
 defineProps({
     flightsByOrigin: {
@@ -19,9 +23,19 @@ const formatDate = (isoStringDate) => {
 
     return `${day} ${monthStr} ${year}, ${hours}:${minutes}`
 }
+
+const handleFlightSelect = (flightNumber) => {
+    router.replace({
+        query: {
+            ...route.query,
+            flightNum: flightNumber,
+        },
+    });
+}
 </script>
 
 <template>
+    <small>Select a flight by clicking on the table</small>
     <div>
         <table>
             <thead>
@@ -34,7 +48,8 @@ const formatDate = (isoStringDate) => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="flight in flightsByOrigin" :id="flight.flightNumber">
+                <tr v-for="flight in flightsByOrigin" :id="flight.flightNumber"
+                    @click="() => handleFlightSelect(flight.flightNumber)">
                     <td>{{ flight.flightNumber }}</td>
                     <td>{{ flight.origin.name }}</td>
                     <td>{{ formatDate(flight.scheduledArrival) }}</td>
@@ -45,3 +60,9 @@ const formatDate = (isoStringDate) => {
         </table>
     </div>
 </template>
+
+<style>
+tr td {
+    cursor: pointer;
+}
+</style>
