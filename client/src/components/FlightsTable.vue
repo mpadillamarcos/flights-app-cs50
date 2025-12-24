@@ -1,30 +1,31 @@
 <script setup lang="ts">
 import enLocale from "../locales/en.json"
 import { useRoute, useRouter } from "vue-router";
+import type { PropType } from "vue";
+import type { Flight } from "../models/Flight";
 
 const route = useRoute();
 const router = useRouter();
 
 defineProps({
     flightsByOrigin: {
-        type: Array,
+        type: Array as PropType<Flight[]>,
         default: () => []
     }
 })
 
-const formatDate = (isoStringDate) => {
+const formatDate = (isoStringDate: Date) => {
     const date = new Date(isoStringDate);
     const day = date.getDate();
-    const monthNum = date.getMonth();
-    const monthStr = enLocale["months"][monthNum]
+    const monthName = enLocale.months[date.getMonth()]
     const year = date.getFullYear();
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
-    return `${day} ${monthStr} ${year}, ${hours}:${minutes}`
+    return `${day} ${monthName} ${year}, ${hours}:${minutes}`
 }
 
-const handleFlightSelect = (flightNumber) => {
+const handleFlightSelect = (flightNumber: string) => {
     router.replace({
         query: {
             ...route.query,
