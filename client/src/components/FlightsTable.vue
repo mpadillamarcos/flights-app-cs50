@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import enLocale from "../locales/en.json"
 import { useRoute, useRouter } from "vue-router";
 import type { PropType } from "vue";
 import type { Flight } from "../models/Flight";
+import { formatDate } from "../utils/helpers";
 
 const route = useRoute();
 const router = useRouter();
@@ -13,17 +13,6 @@ defineProps({
         default: () => []
     }
 })
-
-const formatDate = (isoStringDate: Date) => {
-    const date = new Date(isoStringDate);
-    const day = date.getDate();
-    const monthName = enLocale.months[date.getMonth()]
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${day} ${monthName} ${year}, ${hours}:${minutes}`
-}
 
 const handleFlightSelect = (flightNumber: string) => {
     router.replace({

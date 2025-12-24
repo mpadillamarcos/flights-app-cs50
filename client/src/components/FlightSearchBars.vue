@@ -24,7 +24,7 @@ const handleSearchByFlightNumber = () => {
     router.replace({
         query: {
             ...route.query,
-            flightNum: flightNumber.value,
+            flightNum: flightNumber.value.trim(),
         },
     });
 }
