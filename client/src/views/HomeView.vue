@@ -6,6 +6,7 @@ import api from "../api/api";
 import { useRoute } from "vue-router";
 import type { Flight } from "../models/Flight";
 import useGeolocation from "../functions/useGeolocation";
+import type { PickUpRecommendation } from "../models/PickUpRecommendation";
 
 const route = useRoute();
 
@@ -48,6 +49,15 @@ const flightSelectedByFlightNumber = computed(() => {
   return "Not found";
 })
 
+const pickUpRecommendation = ref<PickUpRecommendation | null>(null)
+
+watch(flightSelectedByFlightNumber, async (newFlight) => {
+  if (newFlight && newFlight !== 'Not found' && location.value) {
+    const arrivalTime = String(newFlight.estimatedArrival);
+    pickUpRecommendation.value = await api.getPickUpRecommendation(arrivalTime, location.value);
+  }
+});
+
 watch(location, async (newLocation) => {
   if (newLocation) {
     flights.value = await api.getFlights()
@@ -63,6 +73,7 @@ watch(location, async (newLocation) => {
     <div id="errorMessage" v-if="!location">This service cannot be used unless a location is provided.</div>
     <div id="response" v-if="flightSelectedByFlightNumber">
       {{ flightSelectedByFlightNumber }}
+      {{ pickUpRecommendation?.leaveAt }}
     </div>
     {{ location }}
   </main>

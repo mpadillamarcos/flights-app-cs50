@@ -13,4 +13,15 @@ export default {
       console.error(error)
     }
   },
+
+  async getPickUpRecommendation(flightArrival: string, location: string) {
+    try {
+      const pickUpRecommendation = await api.get(
+        `/pickUpRecommendation?arrival=${flightArrival}&location=${location}`,
+      )
+      return pickUpRecommendation.data
+    } catch (error) {
+      console.error(error)
+    }
+  },
 }
