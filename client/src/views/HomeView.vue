@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import FlightSearchBars from "../components/FlightSearchBars.vue"
-import FlightsTable from "../components/FlightsTable.vue"
-import api from "../api/api"
+import { ref, onMounted, computed } from 'vue';
+import FlightSearchBars from "../components/FlightSearchBars.vue";
+import FlightsTable from "../components/FlightsTable.vue";
+import api from "../api/api";
 import { useRoute } from "vue-router";
-import type { Flight } from "../models/Flight"
+import type { Flight } from "../models/Flight";
+import useGeolocation from "../functions/useGeolocation";
 
 const route = useRoute();
+
+const { location } = useGeolocation();
 
 const flights = ref<Record<string, Flight[]> | null>(null);
 
@@ -55,8 +58,9 @@ onMounted(async () => {
     <FlightSearchBars :flight-origins="flightOrigins" />
     <FlightsTable v-if="selectedFlightOrigin && !flightSelectedByFlightNumber"
       :flights-by-origin="flightsBySelectedOrigin" />
-    <div id="reseponse" v-if="flightSelectedByFlightNumber">
+    <div id="response" v-if="flightSelectedByFlightNumber">
       {{ flightSelectedByFlightNumber }}
     </div>
+    {{ location }}
   </main>
 </template>
