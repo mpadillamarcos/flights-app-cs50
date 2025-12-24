@@ -8,7 +8,7 @@ export const fetchFlights = async (airport: String): Promise<Flight[]> => {
 
   return response.data.map(
     (aena: any): Flight => ({
-      flightNumber: aena.numVuelo,
+      flightNumber: aena.oaciCompania + aena.numVuelo,
       origin: {
         iata: aena.iataOtro,
         name: aena.ciudadIataOtro,
