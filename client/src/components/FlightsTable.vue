@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import enLocale from "../locales/en.json"
 import { useRoute, useRouter } from "vue-router";
 

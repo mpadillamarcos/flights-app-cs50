@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import FlightSearchBars from "../components/FlightSearchBars.vue";
 import FlightsTable from "../components/FlightsTable.vue";
 import api from "../api/api";
@@ -48,8 +48,10 @@ const flightSelectedByFlightNumber = computed(() => {
   return "Not found";
 })
 
-onMounted(async () => {
-  flights.value = await api.getFlights()
+watch(location, async (newLocation) => {
+  if (newLocation) {
+    flights.value = await api.getFlights()
+  }
 })
 </script>
 
@@ -58,9 +60,16 @@ onMounted(async () => {
     <FlightSearchBars :flight-origins="flightOrigins" />
     <FlightsTable v-if="selectedFlightOrigin && !flightSelectedByFlightNumber"
       :flights-by-origin="flightsBySelectedOrigin" />
+    <div id="errorMessage" v-if="!location">This service cannot be used unless a location is provided.</div>
     <div id="response" v-if="flightSelectedByFlightNumber">
       {{ flightSelectedByFlightNumber }}
     </div>
     {{ location }}
   </main>
 </template>
+
+<style>
+#errorMessage {
+  color: rgb(198, 7, 7);
+}
+</style>

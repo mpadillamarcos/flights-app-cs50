@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue"
+import { ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import SearchIcon from "../components/icons/SearchIcon.vue"
+import SearchIcon from "../components/icons/SearchIcon.vue";
+import useGeolocation from "../functions/useGeolocation";
 
 defineProps({
     flightOrigins: {
@@ -12,6 +13,8 @@ defineProps({
 
 const route = useRoute();
 const router = useRouter();
+
+const { location } = useGeolocation();
 
 const selectedSearchOption = ref("flightNumber");
 const flightNumber = ref("");
@@ -70,24 +73,24 @@ onMounted(() => {
     <div>
         <div id="toggle">
             <button class="button" :class="{ 'button-outline': selectedSearchOption != 'flightNumber' }"
-                @click="selectedSearchOption = 'flightNumber'">Flight number</button>
+                :disabled="!location" @click="selectedSearchOption = 'flightNumber'">Flight number</button>
             <button class="button" :class="{ 'button-outline': selectedSearchOption != 'flightOrigin' }"
-                @click="selectedSearchOption = 'flightOrigin'">Flight origin</button>
+                :disabled="!location" @click="selectedSearchOption = 'flightOrigin'">Flight origin</button>
         </div>
         <div v-if="selectedSearchOption === 'flightNumber'" id="searchBar">
             <div class="row">
-                <input v-model="flightNumber" placeholder="Enter flight number. Eg: ABC1234" />
-                <button class="search button" @click="handleSearchByFlightNumber">
+                <input v-model="flightNumber" placeholder="Enter flight number. Eg: ABC1234" :disabled="!location" />
+                <button class="search button" @click="handleSearchByFlightNumber" :disabled="!location">
                     <SearchIcon />
                 </button>
             </div>
         </div>
         <div v-else>
             <div class="row">
-                <select v-model="flightOrigin">
+                <select v-model="flightOrigin" :disabled="!location">
                     <option v-for="origin in flightOrigins" :id="origin">{{ origin }}</option>
                 </select>
-                <button class="search button" @click="handleSearchByFlightOrigin">
+                <button class="search button" @click="handleSearchByFlightOrigin" :disabled="!location">
                     <SearchIcon />
                 </button>
             </div>
