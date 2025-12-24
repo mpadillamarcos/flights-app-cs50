@@ -42,9 +42,12 @@ watch(selectedSearchOption, (newSelectedOption) => {
     const newQuery: Record<string, string> = { searchOption: newSelectedOption };
 
     if (newSelectedOption === "flightNumber" && flightNumber.value) {
-        newQuery.flightNum = flightNumber.value
+        newQuery.flightNum = flightNumber.value;
     } else if (newSelectedOption === "flightOrigin" && flightOrigin.value) {
-        newQuery.flightOrigin = flightOrigin.value
+        newQuery.flightOrigin = flightOrigin.value;
+        if (flightNumber.value) {
+            newQuery.flightNum = flightNumber.value;
+        }
     }
 
     router.replace({ query: newQuery })
