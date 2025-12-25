@@ -35,7 +35,7 @@ function getAenaStatus(aenaStatus: string): string {
     "": "UNKNOWN",
     CAN: "CANCELLED",
     FLY: "AIRBORNE",
-    SCH: "APPROACHING",
+    SCH: "SCHEDULED",
     FNL: "LANDED",
     LND: "LANDED",
     IBK: "BAGGAGE_CLAIM",
