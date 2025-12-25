@@ -20,6 +20,14 @@ const selectedSearchOption = ref("flightNumber");
 const flightNumber = ref("");
 const flightOrigin = ref("");
 
+const handleSearch = () => {
+    if (selectedSearchOption.value === 'flightNumber') {
+        handleSearchByFlightNumber();
+    } else {
+        handleSearchByFlightOrigin();
+    }
+}
+
 const handleSearchByFlightNumber = () => {
     router.replace({
         query: {
@@ -80,21 +88,16 @@ onMounted(() => {
             <button class="button right" :class="{ 'button-outline': selectedSearchOption != 'flightOrigin' }"
                 :disabled="!location" @click="selectedSearchOption = 'flightOrigin'">Flight origin</button>
         </div>
-        <div v-if="selectedSearchOption === 'flightNumber'" id="searchBar" class="searchBar">
-            <input v-model="flightNumber" placeholder="Enter flight number. Eg: ABC1234" :disabled="!location"
-                class="bar" />
-            <button class="search button" @click="handleSearchByFlightNumber" :disabled="!location">
-                <SearchIcon />
-            </button>
-        </div>
-        <div v-else class="searchBar">
-            <select v-model="flightOrigin" :disabled="!location" id="selector" class="bar">
+        <form class="searchBar" @submit.prevent="handleSearch">
+            <input v-if="selectedSearchOption === 'flightNumber'" v-model="flightNumber"
+                placeholder="Enter flight number. Eg: ABC1234" :disabled="!location" class="bar" />
+            <select v-else v-model="flightOrigin" :disabled="!location" class="bar">
                 <option v-for="origin in flightOrigins" :id="origin">{{ origin }}</option>
             </select>
-            <button class="search button" @click="handleSearchByFlightOrigin" :disabled="!location">
+            <button type="submit" class="search button" :disabled="!location">
                 <SearchIcon />
             </button>
-        </div>
+        </form>
     </div>
 </template>
 
