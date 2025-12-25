@@ -2,12 +2,12 @@
 import { computed, ref, watch } from 'vue';
 import FlightSearchBars from "../components/FlightSearchBars.vue";
 import FlightsTable from "../components/FlightsTable.vue";
+import ResponseCard from "../components/ResponseCard.vue";
 import api from "../api/api";
 import { useRoute } from "vue-router";
 import type { Flight } from "../models/Flight";
 import useGeolocation from "../functions/useGeolocation";
 import type { PickUpRecommendation } from "../models/PickUpRecommendation";
-import { formatDate } from "../utils/helpers";
 
 const route = useRoute();
 
@@ -75,9 +75,7 @@ watch(location, async (newLocation) => {
     <div class="errorMessage" v-if="!location">This service cannot be used unless a location is provided.</div>
     <div class="errorMessage" v-else-if="selectedFlightNumber && !isFlightNumberAvailable">Not found</div>
     <div id="response" v-else-if="selectedFlight && pickUpRecommendation">
-      <p>The flight {{ selectedFlight.flightNumber }} coming from {{ selectedFlight.origin.name }} will arrive at {{
-      formatDate(selectedFlight.estimatedArrival) }}.</p>
-      <p>You should leave from your location starting at {{ formatDate(pickUpRecommendation.leaveAt) }}.</p>
+      <ResponseCard :flight="selectedFlight" :pick-up="pickUpRecommendation" />
     </div>
   </main>
 </template>
