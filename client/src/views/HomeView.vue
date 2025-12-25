@@ -37,20 +37,17 @@ const selectedFlightNumber = computed(() => {
   return String(flightCode);
 });
 
-const isFlightNumberAvailable = computed(() => {
-  if (!flights.value || !selectedFlightNumber.value) return false;
+const selectedFlight = computed(() => {
+  if (!flights.value || !selectedFlightNumber.value) return null;
   for (const flightsByOrigin of Object.values(flights.value)) {
     for (const flight of flightsByOrigin) {
       if (flight.flightNumber === selectedFlightNumber.value) {
-        selectedFlight.value = flight;
-        return true;
+        return flight;
       }
     }
   }
-  return false;
-})
-
-const selectedFlight = ref<Flight | null>(null);
+  return null;
+});
 
 const pickUpRecommendation = ref<PickUpRecommendation | null>(null)
 
@@ -73,7 +70,7 @@ watch(location, async (newLocation) => {
     <FlightSearchBars :flight-origins="flightOrigins" />
     <FlightsTable v-if="selectedFlightOrigin && !selectedFlight" :flights-by-origin="flightsBySelectedOrigin" />
     <div class="errorMessage" v-if="!location">This service cannot be used unless a location is provided.</div>
-    <div class="errorMessage" v-else-if="selectedFlightNumber && !isFlightNumberAvailable">Not found</div>
+    <div class="errorMessage" v-else-if="selectedFlightNumber && !selectedFlight">Not found</div>
     <div id="response" v-else-if="selectedFlight && pickUpRecommendation">
       <ResponseCard :flight="selectedFlight" :pick-up="pickUpRecommendation" />
     </div>
