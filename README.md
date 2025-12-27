@@ -5,10 +5,11 @@
 ## Context
 
 In Palma airport there is a designated parking area for picking people up. The first 15 minutes are free of charge, but it is often not enough. From the plane gate to the parking area it can take around 20 minutes on foot and people usually do not take this into account. Instead of paying for the extra waiting time, drivers wait illegally right before the parking barriers. This action can be dangerous for drivers who are not aware of this practice and generates traffic congestion.
-related news articles (in Spanish):
+Related news articles (in Spanish and an old one in English):
 
 - [Article 1](https://www.ultimahora.es/noticias/local/2025/04/11/2365603/persisten-colas-parking-expres-del-aeropuerto-palma-por-limite-tiempo-gratuito.html)
 - [Article 2](https://okdiario.com/baleares/policia-no-multara-coches-mal-aparcados-carril-acceso-aeropuerto-palma-15588591)
+- [Article 3](https://www.majorcadailybulletin.com/holiday/airport/2023/04/14/112089/palma-airport-war-words-over-arrivals-parking-chaos.html)
 
 ## App description
 
