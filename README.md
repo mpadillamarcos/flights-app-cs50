@@ -1,6 +1,6 @@
 # cs50-flights-app
 
-## Video demo
+## Video demo: https://youtu.be/Fv1oipKy0LM
 
 ## Context
 
